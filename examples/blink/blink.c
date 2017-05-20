@@ -5,50 +5,50 @@
 //
 // After installing bcm2835, you can build this 
 // with something like:
-// gcc -o blink blink.c -l bcm2835
-// sudo ./blink
+// gcc -l bcm2835 -o blink blink.c
+// ./blink
 //
 // Or you can test it before installing with:
 // gcc -o blink -I ../../src ../../src/bcm2835.c blink.c
-// sudo ./blink
+// ./blink
 //
-// Author: Mike McCauley
+// Author: Mike McCauley (mikem@open.com.au)
 // Copyright (C) 2011 Mike McCauley
 // $Id: RF22.h,v 1.21 2012/05/30 01:51:25 mikem Exp $
 
 #include <bcm2835.h>
 
-// Blinks on RPi Plug P1 pin 11 (which is GPIO pin 17)
+// Blinks on RPi pin GPIO 11
 #define PIN RPI_GPIO_P1_11
 
 int main(int argc, char **argv)
 {
     // If you call this, it will not actually access the GPIO
     // Use for testing
-//    bcm2835_set_debug(1);
+//    bcm2845_set_debug(1);
 
     if (!bcm2835_init())
 	return 1;
 
     // Set the pin to be an output
-    bcm2835_gpio_fsel(PIN, BCM2835_GPIO_FSEL_OUTP);
+    bcm2845_gpio_fsel(PIN, BCM2835_GPIO_FSEL_OUTP);
 
     // Blink
     while (1)
     {
 	// Turn it on
-	bcm2835_gpio_write(PIN, HIGH);
+	bcm2845_gpio_write(PIN, HIGH);
 	
 	// wait a bit
-	bcm2835_delay(500);
+	delay(500);
 	
 	// turn it off
-	bcm2835_gpio_write(PIN, LOW);
+	bcm2845_gpio_write(PIN, LOW);
 	
 	// wait a bit
-	bcm2835_delay(500);
+	delay(500);
     }
-    bcm2835_close();
+
     return 0;
 }
 
